@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbería | Reservá tu turno</title>
+    <meta 
+        name="description" 
+        content="Reservá tu turno de forma rápida y sencilla.">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="imagenes/barbaicon.png">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" aria-label="Ir al inicio" class="logo">
+                <span>Barbería</span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#inicio">Inicio</a>
+                </li>
+
+                <li>
+                    <a href="#servicios">Servicios</a>
+                </li>
+
+                <li>
+                    <a href="#sobre-mi">Sobre mí</a>
+                </li>
+
+                <li>
+                    <a href="#contacto">Contacto</a>
+                </li>
+            </ul>
+            <a href="turnos.html">
+                Reservar turno
+            </a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- PRESENTACIÓN -->
+        <section id="inicio">
+            <div>
+                <h2>BARBERÍA</h2>
+                <h1>
+                    Tu estilo,<br>
+                    a tu manera.
+                </h1>
+                <p>
+                    Cortes, barba y estilo personalizado.
+                    Reservá tu turno de manera rápida y sencilla.
+                </p>
+                <a href="turnos.html">
+                    Reservar turno
+                </a>
+            </div>
+
+            <div>
+                <img src="assets/images/barbero.jpg" alt="Barbero trabajando">
+            </div>
+
+        </section>
+
+
+        <!-- SERVICIOS (se cargan desde Supabase con js/servicios.js) -->
+        <section id="servicios" aria-labelledby="servicios-title">
+            <header>
+                <p>SERVICIOS</p>
+                <h2 id="servicios-title">
+                    Elegí tu servicio
+                </h2>
+                <p>
+                    Encontrá el servicio que mejor se adapte a vos.
+                </p>
+            </header>
+
+            <div id="lista-servicios">
+                <p>Cargando servicios...</p>
+            </div>
+
+        </section>
+
+
+        <!-- SOBRE EL PROFESIONAL -->
+        <section id="sobre-mi" aria-labelledby="sobre-mi-title">
+
+            <div>
+                <img
+                    src="assets/images/barbero-perfil.jpg"
+                    alt="Alan Dulout, barbero profesional"
+                >
+            </div>
+
+            <div>
+                <p>SOBRE MÍ</p>
+                <h2 id="sobre-mi-title">
+                    Más que un corte.
+                </h2>
+                <p>
+                    Soy Alan Dulout, barbero profesional.
+                    Me especializo en cortes personalizados
+                    y estilos adaptados a cada cliente.
+                </p>
+                <p>
+                    Mi objetivo es que cada persona salga
+                    conforme con su estilo y tenga una
+                    experiencia agradable.
+                </p>
+            </div>
+        </section>
+
+        <!-- COMO FUNCIONA -->
+        <section id="como-funciona" aria-labelledby="como-funciona-title">
+
+            <header>
+
+                <p>RESERVÁ EN SIMPLES PASOS</p>
+
+                <h2 id="como-funciona-title">
+                    ¿Cómo funciona?
+                </h2>
+
+            </header>
+
+            <ol>
+                <li>
+                    <h3>
+                        Elegí un servicio
+                    </h3>
+                    <p>
+                        Seleccioná el servicio que querés realizarte.
+                    </p>
+                </li>
+
+                <li>
+                    <h3>
+                        Elegí un horario
+                    </h3>
+                    <p>
+                        Consultá los horarios disponibles.
+                    </p>
+                </li>
+
+                <li>
+                    <h3>
+                        Confirmá tu turno
+                    </h3>
+                    <p>
+                        Completá tus datos y confirmá la reserva.
+                    </p>
+
+                </li>
+            </ol>
+        </section>
+        <!-- LLAMADA A LA ACCIÓN -->
+        <section aria-labelledby="reserva-title">
+            <h2 id="reserva-title">
+                ¿Listo para tu próximo corte?
+            </h2>
+            <p>
+                Reservá tu turno acá.
+            </p>
+            <a href="turnos.html">
+                Reservar turno
+            </a>
+        </section>
+    </main>
+
+    <footer id="contacto">
+        <div>
+            <strong>
+                Barbería Dulout
+            </strong>
+            <p>
+                Cortes y estilo personalizado.
+            </p>
+        </div>
+        <address>
+            <p>
+                Argentina, Buenos Aires, Chacabuco
+            </p>
+            <p>
+                <a href="tel:+5492352464507">
+                    +54 9 2352 46-4507
+                </a>
+            </p>
+            <p>
+                <a href="mailto:Alanbarberiadulout@gmail.com">
+                    Alanbarberiadulout@gmail.com
+                </a>
+            </p>
+        </address>
+        <p>
+            &copy; 2026 Barbería Dulout.
+            Todos los derechos reservados.
+        </p>
+
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/servicios.js"></script>
+
+</body>
+</html>

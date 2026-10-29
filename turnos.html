@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>Reservar turno | Barbería</title>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <span>Barbería</span>
+            </a>
+
+            <ul>
+                <li><a href="index.html">Volver</a></li>
+            </ul>
+
+            <a href="turnos.html">Reservar turno</a>
+        </nav>
+    </header>
+
+
+    <main>
+    <section class="turnos">
+
+        <div class="turnos-header">
+            <h1>Reservá tu turno</h1>
+            <p>Elegí el servicio, la fecha y el horario que prefieras.</p>
+        </div>
+
+        <form class="turnos-form">
+
+            <div class="form-group">
+                <label for="servicio">Servicio</label>
+                <select id="servicio" name="servicio" required>
+                    <option value="">Seleccioná un servicio</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
+            </div>
+
+            <div class="form-group">
+                <label for="horario">Horario</label>
+                <select id="horario" name="horario" required disabled>
+                    <option value="">Elegí una fecha primero</option>
+                </select>
+                <p id="mensaje-disponibilidad" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ejemplo: Juan Pérez" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+(([ ']|-)[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*" title="Usá solo letras, espacios, guiones o apóstrofos." required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ejemplo: 11 5555 1234" inputmode="tel" pattern="[0-9+\s\-]{8,20}" title="Usá solo números, espacios, guiones o +. Mínimo 8 dígitos." required>
+            </div>
+
+            <button type="submit">Confirmar turno</button>
+
+        </form>
+        <p id="mensaje-turno" role="status" aria-live="polite"></p>
+
+    </section>
+</main>
+
+
+    <footer class="footer-turnos">
+        <p>&copy; 2026 Barbería. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/turnos.js"></script>
+</body>
+
+</html>
