@@ -11,7 +11,8 @@ create table franjas (
 create table servicios (
   id smallint generated always as identity primary key,
   nombre text not null,
-  activo boolean not null default true
+  activo boolean not null default true,
+  descripcion text
 );
 
 create table precios (
@@ -31,7 +32,8 @@ create table turnos (
   precio_cobrado numeric(10,2),
   estado text not null default 'confirmado'
     check (estado in ('confirmado','cancelado','atendido')),
-  creado_en timestamptz not null default now()
+  creado_en timestamptz not null default now(),
+  google_event_id text  -- ID del evento en Google Calendar (lo completa Make.com)
 );
 
 create table dias_bloqueados (
@@ -48,7 +50,7 @@ create unique index turnos_unico_activo
 
 
 -- 3. VALIDACIONES AL RESERVAR
---    (no pasado, no día bloqueado, precio automático)
+--    (solo jueves a sábado, no pasado, no día bloqueado, precio automático)
 
 create or replace function validar_turno_nuevo()
 returns trigger language plpgsql as $$
@@ -58,6 +60,10 @@ declare
   precio_actual numeric(10,2);
 begin
   select hora_inicio into inicio from franjas where id = new.franja_id;
+
+  if extract(dow from new.fecha) not in (4, 5, 6) then
+    raise exception 'Solo se atiende jueves, viernes y sábados';
+  end if;
 
   if (new.fecha + inicio) <= ahora then
     raise exception 'No se puede reservar un horario que ya pasó';
@@ -101,9 +107,9 @@ insert into franjas (id, hora_inicio, hora_fin, bloque) values
 (15,'19:20','20:00','tarde'),(16,'20:00','20:40','tarde'),
 (17,'20:40','21:20','tarde');
 
--- EJEMPLO: cambiá los servicios y precios por los reales de tu primo
-insert into servicios (nombre) values
-('Corte'), ('Barba'), ('Corte + barba');
+-- EJEMPLO: cambiá los servicios y precios por los reales de la barbería
+insert into servicios (nombre, descripcion) values
+('Corte', null), ('Barba', null), ('Corte + barba', null);
 
 insert into precios (servicio_id, precio) values
 (1, 10000), (2, 6000), (3, 15000);
@@ -123,10 +129,11 @@ create policy "ver servicios" on servicios for select using (activo);
 create policy "ver precios" on precios for select using (true);
 create policy "ver dias bloqueados" on dias_bloqueados for select using (true);
 
--- Cualquiera puede RESERVAR, pero no leer los turnos de otros
+-- Cualquiera puede RESERVAR, pero no leer los turnos de otros.
+-- Un cliente no puede mandar un google_event_id: lo completa solo Make.com.
 create policy "reservar turno" on turnos
   for insert
-  with check (estado = 'confirmado');
+  with check (estado = 'confirmado' and google_event_id is null);
 
 
 -- 6. FUNCIÓN PARA SABER QUÉ HORARIOS ESTÁN OCUPADOS
