@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barbería | Reservá tu turno</title>
-    <meta 
+    <title>Barbería Dulout | Reservá tu turno</title>
+    <meta
         name="description" 
         content="Reservá tu turno de forma rápida y sencilla.">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="imagenes/barbaicon.png">
+    <link rel="icon" type="image/png" href="imagenes/barberiaicono.png">
 </head>
 
 <body>
     <header>
+        <!-- Botón Hamburguesa -->
+        <button class="hamburguesa" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <nav>
             <a href="index.html" aria-label="Ir al inicio" class="logo">
-                <span>Barbería</span>
+                <span>Barbería Dulout</span>
             </a>
-            <ul>
+            <ul id="menu-links">
                 <li>
                     <a href="#inicio">Inicio</a>
                 </li>
@@ -48,7 +55,7 @@
         <!-- PRESENTACIÓN -->
         <section id="inicio">
             <div>
-                <h2>BARBERÍA</h2>
+                <h2>BARBERÍA DULOUT</h2>
                 <h1>
                     Tu estilo,<br>
                     a tu manera.
@@ -62,8 +69,8 @@
                 </a>
             </div>
 
-            <div>
-                <img src="assets/images/barbero.jpg" alt="Barbero trabajando">
+            <div class="imagen-presentacion">
+                <img src="imagenes/barberocortando2.jpg" alt="Barbero trabajando">
             </div>
 
         </section>
@@ -76,7 +83,7 @@
                 <h2 id="servicios-title">
                     Elegí tu servicio
                 </h2>
-                <p>
+                <p id="servicios-description">
                     Encontrá el servicio que mejor se adapte a vos.
                 </p>
             </header>
@@ -91,9 +98,9 @@
         <!-- SOBRE EL PROFESIONAL -->
         <section id="sobre-mi" aria-labelledby="sobre-mi-title">
 
-            <div>
+            <div class="imagen-sobre-mi">
                 <img
-                    src="assets/images/barbero-perfil.jpg"
+                    src="imagenes/barberocortando.jpg"
                     alt="Alan Dulout, barbero profesional"
                 >
             </div>
@@ -201,12 +208,15 @@
             &copy; 2026 Barbería Dulout.
             Todos los derechos reservados.
         </p>
-
+        <p class="creditos">
+            <a href="https://www.flaticon.es/iconos-gratis/barberia" title="barbería iconos">Barbería iconos creados por Magnific - Flaticon</a>
+        </p>
     </footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/servicios.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>
