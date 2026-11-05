@@ -13,8 +13,13 @@
     --color-light: #DBCEC3;
     --color-white: #DDDDCF;
 
+    /* Dorado del brillo y de los bordes (mismo color en formato rgb para las sombras) */
+    --color-glow: #dfb76c;
+    --glow-rgb: 223 183 108;
+
     /* Tipografía */
     --font-main: Arial, Helvetica, sans-serif;
+    --font-heading: "Montserrat", sans-serif;
 
     /* Otros */
     --max-width: 1200px;
@@ -31,6 +36,8 @@
 
 html {
     scroll-behavior: smooth;
+    /* El header es sticky: evita que tape las secciones al usar links a #anclas */
+    scroll-padding-top: 80px;
 }
 
 body {
@@ -66,6 +73,19 @@ section > header {
     max-width: var(--max-width);
     margin: 0 auto 50px;
     text-align: center;
+
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    padding: 30px 20px;
+    border-radius: var(--border-radius);
+}
+
+section > header h2 {
+    color: var(--color-white);
+}
+
+section > header p:last-child {
+    color: var(--color-light);
 }
 
 section > header p:first-child {
@@ -95,31 +115,23 @@ p {
    HEADER / NAVBAR
 ======================================== */
 
-nav a:not(.logo):hover {
-    background-color: var(--color-white);
-    color: var(--color-dark);
-    padding: 8px 12px;
-    border-radius: 6px;
-}
+body > header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
 
-header:first-child nav > a:first-child {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
-}
-
-header:first-child nav ul a {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-}
-
-header:first-child nav > a:last-child {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-}
-header:first-child {
     background-color: var(--color-dark);
     color: var(--color-white);
     padding: 0 5%;
+}
+
+.avolver {
+    display: inline-block;
+    background-color: var(--color-gold);
+    color: var(--color-dark);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 1.1rem;
 }
 
 header:first-child nav {
@@ -133,35 +145,50 @@ header:first-child nav {
     gap: 30px;
 }
 
+/* Logo */
 header:first-child nav > a:first-child {
+    font-family: var(--font-heading);
     font-size: 1.4rem;
     font-weight: 700;
     white-space: nowrap;
 }
 
+/* Links del menú */
 header:first-child nav ul {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 10px;
 }
 
 header:first-child nav ul a {
+    font-family: var(--font-heading);
+    font-weight: 500;
     color: var(--color-white);
-    transition: color var(--transition);
+
+    padding: 12px 18px;
+    border-radius: 6px;
+    background-color: transparent;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition);
 }
 
 header:first-child nav ul a:hover {
-    color: var(--color-gold);
+    background-color: var(--color-white); 
+    color: var(--color-dark);
 }
 
+/* Botón "Reservar turno" */
 header:first-child nav > a:last-child {
+    font-family: var(--font-heading);
+    font-weight: 700;
+
     background-color: var(--color-gold);
     color: var(--color-dark);
 
     padding: 10px 20px;
     border-radius: 8px;
-
-    font-weight: 700;
 
     transition:
         background-color var(--transition),
@@ -173,10 +200,63 @@ header:first-child nav > a:last-child:hover {
     transform: translateY(-2px);
 }
 
+/* Botón hamburguesa (oculto en escritorio) */
+.hamburguesa {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburguesa span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: var(--color-white);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburguesa.activo span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburguesa.activo span:nth-child(2) { opacity: 0; }
+.hamburguesa.activo span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
 
 /* ========================================
    HERO
 ======================================== */
+
+/* Borde y brillo compartidos */
+.imagen-presentacion,
+.imagen-sobre-mi {
+    border: 5px solid var(--color-glow);
+    border-radius: 20px;
+    box-shadow:
+        0 0 15px rgb(var(--glow-rgb) / 0.6),
+        0 0 5px rgb(var(--glow-rgb) / 0.4);
+}
+
+.imagen-presentacion {
+    animation: brilloConstante 3s ease-in-out infinite;
+}
+
+/* Efecto de brillo (0% y 100% iguales para que el loop no pegue un salto) */
+@keyframes brilloConstante {
+    0%,
+    100% {
+        box-shadow:
+            0 0 10px rgb(var(--glow-rgb) / 0.4),
+            0 0 5px rgb(var(--glow-rgb) / 0.2);
+    }
+    50% {
+        box-shadow:
+            0 0 25px rgb(var(--glow-rgb) / 0.9),
+            0 0 15px rgb(var(--glow-rgb) / 0.6);
+    }
+}
 
 #inicio {
     min-height: 650px;
@@ -186,8 +266,6 @@ header:first-child nav > a:last-child:hover {
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 60px;
-
-    max-width: none;
 }
 
 #inicio > div:first-child {
@@ -297,6 +375,11 @@ header:first-child nav > a:last-child:hover {
     font-weight: 700;
 }
 
+#servicios header p:last-child {
+    color: var(--color-rose);
+    font-size: 1.1rem;
+}
+
 
 /* ========================================
    SOBRE MÍ
@@ -305,7 +388,6 @@ header:first-child nav > a:last-child:hover {
 #sobre-mi {
     background-color: var(--color-dark);
     color: var(--color-white);
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -454,8 +536,6 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
-
-    max-width: none;
 }
 
 footer strong {
@@ -485,6 +565,142 @@ footer > p {
     align-self: end;
 }
 
+/* Crédito de Flaticon: fila propia, alineado a la derecha */
+footer .creditos {
+    grid-column: 1 / -1;
+    text-align: right;
+}
+
+
+/* ========================================
+   TURNOS HTML
+======================================== */
+
+.turnos {
+    min-height: 75vh;
+    padding: 80px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.turnos-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.turnos-header h1 {
+    color: var(--color-white);
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.turnos-header p {
+    color: var(--color-secondary);
+}
+
+
+/* Caja del formulario */
+
+.turnos-form {
+    width: 100%;
+    max-width: 550px;
+    background-color: var(--color-white);
+    padding: 45px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 6px solid var(--color-glow);
+    border-radius: 20px;
+}
+
+
+/* Cada campo */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--color-dark);
+    font-weight: bold;
+}
+
+
+/* Inputs y selects */
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+
+    border: 1px solid var(--color-rose);
+    border-radius: 6px;
+
+    background-color: white;
+
+    font-size: 15px;
+}
+
+
+/* Cuando hacés click en un campo */
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+}
+
+
+/* Botón */
+
+.turnos-form button {
+    margin-top: 10px;
+    padding: 14px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--color-gold);
+    color: var(--color-dark);
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.turnos-form button:hover {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+}
+
+.footer-turnos {
+    text-align: center;
+    grid-template-columns: 1fr;
+}
+
+.footer-turnos > p {
+    text-align: center;
+}
+
+#mensaje-disponibilidad {
+    color: #ff0000;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+input[type="date"] {
+    cursor: pointer;
+}
+
 
 /* ========================================
    RESPONSIVE
@@ -492,9 +708,59 @@ footer > p {
 
 @media (max-width: 900px) {
 
-    header:first-child nav ul {
+    /* ---- Header / menú hamburguesa ---- */
+
+    .hamburguesa {
+        display: flex;
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        z-index: 101;
+    }
+
+    header nav {
+        flex-wrap: wrap;
+    }
+
+    /* Links y botón "Reservar turno" ocultos hasta abrir el menú */
+    header:first-child nav ul,
+    header nav > a:not(.logo) {
+        display: none;
+        width: 100%;
+    }
+
+    header.abierto #menu-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        padding: 16px 0;
+    }
+
+    header.abierto nav > a:not(.logo) {
+        display: block;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* ---- Header de la página de turnos ---- */
+
+    body > header.header-turnos nav {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    /* Muestra "Regresar" */
+    body > header.header-turnos nav ul {
+        display: flex;
+    }
+
+    /* Oculta "Reservar turno" en esta página */
+    body > header.header-turnos nav > a:not(.logo) {
         display: none;
     }
+
+    /* ---- Secciones ---- */
 
     #inicio {
         grid-template-columns: 1fr;
@@ -540,164 +806,4 @@ footer > p {
     footer > p {
         text-align: left;
     }
-}
-
-
-@media (max-width: 600px) {
-
-    section {
-        padding: 70px 5%;
-    }
-
-    header:first-child nav {
-        min-height: 70px;
-    }
-
-    header:first-child nav > a:last-child {
-        padding: 8px 14px;
-        font-size: 0.9rem;
-    }
-
-    #inicio {
-        min-height: auto;
-        padding-top: 80px;
-        padding-bottom: 80px;
-    }
-
-    #inicio h1 {
-        font-size: 3rem;
-    }
-
-    #inicio > div:last-child {
-        height: 300px;
-    }
-
-    h2 {
-        font-size: 2rem;
-    }
-
-    #sobre-mi h2 {
-        font-size: 2.3rem;
-    }
-}
-
-/* ========================================
-   TURNOS HTML
-======================================== */
-
-.turnos {
-    min-height: 75vh;
-    padding: 80px 20px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.turnos-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.turnos-header h1 {
-    color: var(--color-white);
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.turnos-header p {
-    color: var(--color-secondary);
-}
-
-
-/* Caja del formulario */
-
-.turnos-form {
-    width: 100%;
-    max-width: 550px;
-
-    background-color: var(--color-white);
-
-    padding: 40px;
-
-    border-radius: var(--border-radius);
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-
-/* Cada campo */
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.form-group label {
-    color: var(--color-dark);
-    font-weight: bold;
-}
-
-
-/* Inputs y selects */
-
-.form-group input,
-.form-group select {
-    width: 100%;
-
-    padding: 12px;
-
-    border: 1px solid var(--color-rose);
-    border-radius: 6px;
-
-    background-color: white;
-
-    font-size: 15px;
-
-    box-sizing: border-box;
-}
-
-
-/* Cuando hacés click en un campo */
-
-.form-group input:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: var(--color-gold);
-}
-
-
-/* Botón */
-
-.turnos-form button {
-    margin-top: 10px;
-
-    padding: 14px;
-
-    border: none;
-    border-radius: 6px;
-
-    background-color: var(--color-gold);
-    color: var(--color-dark);
-
-    font-size: 16px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.3s ease;
-}
-
-.turnos-form button:hover {
-    background-color: var(--color-accent);
-    color: var(--color-white);
-}
-
-.footer-turnos {
-    text-align: center;
 }
