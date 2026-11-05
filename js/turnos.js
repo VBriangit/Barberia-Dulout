@@ -32,6 +32,13 @@ function getBusinessDateTime() {
 
 dateInput.min = getBusinessDateTime().date;
 
+dateInput.addEventListener("click", () => {
+    try {
+        dateInput.showPicker();
+    } catch {
+        // Navegador sin soporte: queda el comportamiento normal (ícono)
+    }
+});
 function isFutureAppointment(date, time) {
     const now = getBusinessDateTime();
     return date > now.date || (date === now.date && time > now.time);
@@ -45,6 +52,13 @@ function setTimeOptions(placeholder, hours = []) {
 }
 
 const shortTime = (value) => String(value).slice(0, 5);
+
+const diasConAtencion = [4, 5, 6]; // jueves, viernes y sábado
+
+function atiendeEseDia(fecha) {
+    const [anio, mes, dia] = fecha.split("-").map(Number);
+    return diasConAtencion.includes(new Date(anio, mes - 1, dia).getDay());
+}
 
 const formatPrice = (value) =>
     new Intl.NumberFormat("es-AR", {
@@ -118,6 +132,12 @@ if (!configReady) {
         availabilityMessage.textContent = "";
 
         if (!selectedDate) {
+            return;
+        }
+
+        if (!atiendeEseDia(selectedDate)) {
+            setTimeOptions("Ese día no hay atención");
+            availabilityMessage.textContent = "Atendemos solo jueves, viernes y sábados.";
             return;
         }
 
